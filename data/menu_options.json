@@ -3,13 +3,18 @@
   "routes": [
     {
       "route": "/",
-      "icon": "home",
+      "icon": "add_alert",
       "title": "Home"
     },
     {
       "route": "/avatars",
       "icon": "accessibility",
       "title": "Avatars"
+    },
+    {
+      "route": "/cards",
+      "icon": "folder_open",
+      "title": "Cards"
     }
   ]
 }

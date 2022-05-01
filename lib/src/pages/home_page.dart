@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/pages/alert_page.dart';
 import 'package:flutter_application_1/src/providers/menu_provider.dart';
+import 'package:flutter_application_1/src/utils/icon_string_util.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,25 +23,30 @@ class HomePage extends StatelessWidget {
       future: menuProvider.loadData(),
       initialData: [],
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        print(snapshot.data);
-
         return ListView(
-          children: _optionsList(snapshot.data),
+          children: _optionsList(context, snapshot.data),
         );
       },
     );
   }
 
-  List<Widget> _optionsList(List<dynamic>? data) {
+  List<Widget> _optionsList(BuildContext context, List<dynamic>? data) {
     final List<Widget> options = [];
 
     if (data != null) {
       data.forEach((element) {
         final widgeTemp = ListTile(
           title: Text(element['title']),
-          leading: Icon(Icons.supervised_user_circle),
+          leading: getIcon(element['icon']),
           trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
-          onTap: () {},
+          onTap: () {
+            final route = MaterialPageRoute(
+              builder: (context) {
+                return AlertPage();
+              },
+            );
+            Navigator.push(context, route);
+          },
         );
 
         options
@@ -49,7 +56,9 @@ class HomePage extends StatelessWidget {
 
       return options;
     } else {
-      return [];
+      return [
+        CircularProgressIndicator(),
+      ];
     }
   }
 }
