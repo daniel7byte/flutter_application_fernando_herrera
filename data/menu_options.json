@@ -1,0 +1,15 @@
+{
+  "app_name": "Daniel7Byte - Application",
+  "routes": [
+    {
+      "route": "/",
+      "icon": "home",
+      "title": "Home"
+    },
+    {
+      "route": "/avatars",
+      "icon": "accessibility",
+      "title": "Avatars"
+    }
+  ]
+}

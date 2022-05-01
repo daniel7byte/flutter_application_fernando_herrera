@@ -1,44 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/providers/menu_provider.dart';
 
 class HomePage extends StatelessWidget {
-  final textStyle = new TextStyle(fontSize: 26);
-
-  final counter = 10;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Titulo'),
-        centerTitle: false,
-        elevation: 5.0,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                'Número de clics',
-                style: textStyle,
-              ),
-            ),
-            Center(
-              child: Text(
-                '$counter',
-                style: textStyle,
-              ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          // counter++;
-        },
-        child: Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: _options(),
     );
+  }
+
+  Widget _options() {
+    // menuProvider.loadData();
+
+    return FutureBuilder(
+      future: menuProvider.loadData(),
+      initialData: [],
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+        print(snapshot.data);
+
+        return ListView(
+          children: _optionsList(snapshot.data),
+        );
+      },
+    );
+  }
+
+  List<Widget> _optionsList(List<dynamic>? data) {
+    final List<Widget> options = [];
+
+    if (data != null) {
+      data.forEach((element) {
+        final widgeTemp = ListTile(
+          title: Text(element['title']),
+          leading: Icon(Icons.supervised_user_circle),
+          trailing: Icon(Icons.keyboard_arrow_right, color: Colors.blue),
+          onTap: () {},
+        );
+
+        options
+          ..add(widgeTemp)
+          ..add(Divider());
+      });
+
+      return options;
+    } else {
+      return [];
+    }
   }
 }
