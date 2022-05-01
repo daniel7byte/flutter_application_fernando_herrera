@@ -2,17 +2,17 @@
   "app_name": "Daniel7Byte - Application",
   "routes": [
     {
-      "route": "/",
+      "route": "alert",
       "icon": "add_alert",
-      "title": "Home"
+      "title": "Alertas"
     },
     {
-      "route": "/avatars",
+      "route": "avatar",
       "icon": "accessibility",
       "title": "Avatars"
     },
     {
-      "route": "/cards",
+      "route": "cards",
       "icon": "folder_open",
       "title": "Cards"
     }
