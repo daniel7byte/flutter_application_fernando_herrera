@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/pages/alert_page.dart';
+import 'package:flutter_application_1/src/pages/counter_page.dart';
+import 'package:flutter_application_1/src/pages/outlet_page.dart';
 import 'package:flutter_application_1/src/providers/menu_provider.dart';
 import 'package:flutter_application_1/src/utils/icon_string_util.dart';
 
@@ -12,20 +14,98 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Titulo'),
       ),
-      body: _options(),
+      body: Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'My Creations',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  ListTile(
+                    title: Text('Curriculum App'),
+                    leading: Icon(Icons.add_to_home_screen),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, 'curriculum_app');
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Outlet App'),
+                    leading: Icon(Icons.shopping_cart),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OutletPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('Counter App'),
+                    leading: Icon(Icons.timer),
+                    trailing: Icon(
+                      Icons.keyboard_arrow_right,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CounterPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const Text(
+              'Course - Fernando Herrera',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Expanded(
+              child: _options(),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _options() {
-    // menuProvider.loadData();
-
     return FutureBuilder(
       future: menuProvider.loadData(),
       initialData: [],
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-        return ListView(
-          children: _optionsList(context, snapshot.data),
-        );
+        if (snapshot.hasData) {
+          return ListView(
+            children: _optionsList(context, snapshot.data),
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
       },
     );
   }
